@@ -1,3 +1,4 @@
 <template lang="pug">
-router-view
+div(class="h-screen bg-slate-100")
+ router-view
 </template>

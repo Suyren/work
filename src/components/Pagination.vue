@@ -82,3 +82,43 @@ const lastPage = () => {
   changePageFn(totalPage.value);
 }
 </script>
+
+<style lang="scss">
+.Pagination {
+  display: flex;
+  justify-content: center;
+  user-select: none;
+  color: grey;
+  > div {
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    &:hover {
+      background-color: blue;
+      color: #fff;
+    }
+    &.active {
+      background-color: blue;
+      color: #fff;
+    }
+    &.disabled {
+      color: grey;
+      &:hover {
+        background-color: #fff;
+      }
+    }
+    > .uil {
+      font-size: 22px;
+      &.limit-btn {
+        font-size: 28px;
+      }
+    }
+  }
+}
+</style>

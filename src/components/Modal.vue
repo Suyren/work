@@ -48,6 +48,38 @@ const normalClickOutSide = (isOutSide: boolean) => {
 }
 </script>
 
-<style>
+<style lang="scss">
+
+
+.Modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 5;
+  .modal-block {
+    margin: 0 auto;
+    background-color: #fff;
+    //margin-top: 15vh;
+    border-radius: 6px;
+    position: relative;
+    .close-icon {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      > svg {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+
 
 </style>
