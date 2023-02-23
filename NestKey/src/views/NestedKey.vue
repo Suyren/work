@@ -20,7 +20,7 @@ div(class="text-center selection:bg-green-100 flex justify-between p-6")
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
 import NestList from '@/components/NestList.vue';
 import type { NestListModel, NestData } from '@/model/views/NestKey';
