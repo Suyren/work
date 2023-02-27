@@ -24,7 +24,7 @@ import Modal from '@/components/Modal.vue';
 const totalData = 3010;
 const peopleInfoList: Ref<PeopleInfo[]> = ref([]);
 const showMode = ref(localStorage.getItem('showMode') ? localStorage.getItem('showMode') : 'card');
-const isShowModal = ref(true);
+const isShowModal = ref(false);
 const numberOfRowsPerPage = ref(localStorage.getItem('perPage') ? Number(localStorage.getItem('perPage')) : 30);
 const currentPage = ref(localStorage.getItem('currentPage') ? Number(localStorage.getItem('currentPage')) : 1);
 const totalPage = computed(() => {
@@ -35,10 +35,6 @@ const calcAPICount = computed(() => {
     ? totalData % numberOfRowsPerPage.value
     : numberOfRowsPerPage.value;
 })
-
-function addFavorite() {
-
-}
 
 function changeMode(mode: string) {
   showMode.value = mode;
@@ -56,6 +52,7 @@ function closeFn() {
 function changePageFn(page: number) {
   currentPage.value = page;
   localStorage.setItem('currentPage', String(page));
+  peopleInfoList.value = [];
   getUserInfo();
 }
 
@@ -74,7 +71,7 @@ function getUserInfo() {
     const data = result.data;
     peopleInfoList.value = data.results.map((people: any) => {
       return {
-        id: people.id.value,
+        id: people.login.uuid,
         headshot: people.picture.medium,
         firstName: people.name.first,
         lastName: people.name.last,
