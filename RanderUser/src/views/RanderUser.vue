@@ -3,7 +3,7 @@ div(class="p-6")
   div(class="flex")
     div(:class="['rounded-tl-lg px-4 py-1 cursor-pointer hover:bg-sky-300', bookMarkClass('AllUser')]" @click="() => { changeRoute('AllUser') }") ALL 
     div(:class="['rounded-tr-lg px-4 py-1 cursor-pointer hover:bg-sky-300', bookMarkClass('MyFavorite')]" @click="() => { changeRoute('MyFavorite') }") Favorite
-  div(class="bg-white shadow-lg rounded-md p-4")
+  div(class="bg-white shadow-lg rounded-md p-4 h-90-vh")
     router-view
 </template>
 
