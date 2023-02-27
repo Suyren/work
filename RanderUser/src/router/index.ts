@@ -1,10 +1,26 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import RanderUser from '@/views/RanderUser.vue'
+
 export const routes: RouteRecordRaw[] = [
   {
     path: "/RanderUser",
     name: "RanderUser",
-    component: () => import("@/views/RanderUser.vue"),
+    redirect: '/RanderUser/AllUser',
+    component: RanderUser,
+    children: [
+      {
+        path: "AllUser",
+        name: "AllUser",
+        component: () => import("@/views/RanderUser/AllUser.vue"),
+      },
+      {
+        path: "MyFavorite",
+        name: "MyFavorite",
+        component: () => import("@/views/RanderUser/MyFavorite.vue"),
+      },
+    ]
   },
+  
 ];
 
 const router = createRouter({

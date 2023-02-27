@@ -1,26 +1,26 @@
 <template>
-  <div class="Pagination">
-    <div :class="[{'disabled': currentPage === 1}]" @click="firstPage">
-      <i class="uil uil-angle-double-left limit-btn"></i>
+  <div class="flex justify-center items-center w-full">
+    <div :class="['w-8 py-1 mr-2 text-center rounded-full hover:bg-sky-300 cursor-pointer', {'text-neutral-200 hover:bg-white': currentPage === 1}]" @click="firstPage">
+      <font-awesome-icon icon="angle-double-left" />
     </div>
-    <div :class="[{'disabled': currentPage === 1}]" @click="prevPage">
-      <i class="uil uil-angle-left"></i>
+    <div :class="['w-8 py-1 mr-2 text-center rounded-full hover:bg-sky-300 cursor-pointer', {'text-neutral-200 hover:bg-white': currentPage === 1}]" @click="prevPage">
+      <font-awesome-icon icon="chevron-left" />
     </div>
-    <div :class="['page', {'active': page === currentPage}]"
+    <div :class="['page w-8 py-1 mr-2 text-center rounded-full hover:bg-sky-300 cursor-pointer', {'bg-sky-300 hover:text-black': page === currentPage}]"
       v-for="(page, index) in calcPage" 
       :key="index"
       @click="clickPage(page)">{{ page }}</div>
-    <div :class="[{'disabled': currentPage === totalPage}]" @click="nextPage">
-      <i class="uil uil-angle-right"></i>
+    <div :class="['w-8 py-1 mr-2 text-center rounded-full hover:bg-sky-300 cursor-pointer', {'text-neutral-200 hover:bg-white': currentPage === totalPage}]" @click="nextPage">
+      <font-awesome-icon icon="chevron-right" />
     </div>
-    <div :class="[{'disabled': currentPage === totalPage}]" @click="lastPage">
-      <i class="uil uil-angle-double-right limit-btn"></i>
+    <div :class="['w-8 py-1 mr-2 text-center rounded-full hover:bg-sky-300 cursor-pointer', {'text-neutral-200 hover:bg-white': currentPage === totalPage}]" @click="lastPage">
+      <font-awesome-icon icon="angle-double-right" />
     </div>
-    <select class="mr-2" v-model="numberOfRowsPerPage" @change="changePerpage(numberOfRowsPerPage)">
+    <select class="border border-black mr-2 rounded-sm" v-model="numberOfRowsPerPage" @change="changePerpage(numberOfRowsPerPage)">
       <option v-for="page in props.perPageList" :value="page.value">{{ page.text }}</option>
     </select>
     <span>
-      <input class="jump-paging" type="text" v-model="inputPage" @keydown="pageInput">
+      <input class="border border-black w-8 rounded-sm" type="text" v-model="inputPage" @keydown="pageInput">
     </span>
   </div>
 </template>
@@ -47,15 +47,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   perPageList: () => [
     { text: '10', value: 10 },
-    { text: '20', value: 20 },
     { text: '30', value: 30 },
-    { text: '40', value: 40 },
     { text: '50', value: 50 },
-    { text: '60', value: 60 },
-    { text: '70', value: 70 },
-    { text: '80', value: 80 },
-    { text: '90', value: 90 },
-    { text: '100', value: 100 },
   ]
 });
 

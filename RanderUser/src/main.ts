@@ -8,13 +8,22 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
   faGripHorizontal,
   faList,
-  faTimes
+  faTimes,
+  faChevronLeft,
+  faChevronRight,
+  faAngleDoubleLeft,
+  faAngleDoubleRight
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faGripHorizontal);
 library.add(faList);
 library.add(faTimes);
+library.add(faChevronLeft);
+library.add(faChevronRight);
+library.add(faAngleDoubleLeft);
+library.add(faAngleDoubleRight);
+
 
 const pinia = createPinia();
 const app = createApp(App);
