@@ -3,7 +3,7 @@ ul(class="text-left ml-4")
   li(v-for="item in props.nestList")
     span(v-if="item.children" class="cursor-pointer" @click="() => { toggle(item) }") {{ `${item.name} ${item.isOpen ? '[-]' : '[+]'} ` }}
     span(v-else) {{ `${item.name}: ` }}
-    span(v-if="!item.children" :ref="(el) => setRef(el, item.refName)") {{ item.value }}
+    span(v-if="!item.children" :ref="(el) => setRef(el, item.refName)" class="text-rose-400") {{ item.value }}
     NestList(v-if="item.children" v-show="item.isOpen" :nestList="item.children" :setRef="props.setRef")
 </template>
 

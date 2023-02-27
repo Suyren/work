@@ -1,6 +1,6 @@
 <template lang="pug">
 div(class="rounded-md shadow-md w-60")
-  div(class="bg-white flex justify-center items-center rounded-t-md p-2 py-6")
+  div(class="bg-zinc-50 flex justify-center items-center rounded-t-md p-2 py-6")
     img(class="w-16 h-16 rounded-full" :src="info.headshot")
   div(:class="['p-2 rounded-b-md', genderStyle]")
     div(class="flex justify-between")

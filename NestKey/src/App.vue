@@ -1,23 +1,23 @@
 <template lang="pug">
 div(class="text-center selection:bg-green-100 flex justify-between p-6")
-  div(class="w-1/2 p-4 border border-neutral-400")
+  div(class="w-1/2 mr-2 p-4 border border-neutral-400 max-h-90-vh overflow-auto")
     div(class="text-left mb-4")
       button(class="border-neutral-400 px-4 bg-blue-300 rounded" @click="addNestData") +Add New Pair
     ul(class="w-full")
       li(v-for="item in nestData" class="flex items-center mb-2")
-        div(class="w-2/5")
-          input(class="block rounded-md border border-gray-300 px-2 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
+        div(class="w-5/12 mr-2")
+          input(class="block w-full rounded-md border border-gray-300 px-2 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
             v-model="item.str"
             @input="renderNestKey")
-        div(class="w-2/5")
-          input(class="block rounded-md border border-gray-300 px-2 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
+        div(class="w-5/12 mr-2")
+          input(class="block w-full rounded-md border border-gray-300 px-2 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
             v-model="item.value"
             @input="() => { updateNestValue(item) }")
-        button(class="p-2 border-neutral-400 px-4 bg-blue-300 rounded") -
-  div(class="w-1/2 flex justify-center p-4 border border-neutral-400")
+        button(class="p-2 border-neutral-400 px-4 bg-blue-300 rounded w-1/12") -
+  div(class="w-1/2 flex justify-center p-4 border border-neutral-400 max-h-90-vh overflow-auto")
     div(v-if="nestList.length" class="w-full")
       NestList(:nestList="nestList" :setRef="setRef")
-</template>
+  </template>
   
   <script setup lang="ts">
   import { ref } from 'vue';
@@ -46,6 +46,7 @@ div(class="text-center selection:bg-green-100 flex justify-between p-6")
       strSplit.splice(finalIndex, 1);
       finalIndex--;
     }
+    console.log(strSplit);
     strSplit.reduce((prev: any, item: string, i: number) => {
       if (!prev[item] && i !== finalIndex) {
         prev[item] = {};

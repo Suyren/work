@@ -6,11 +6,15 @@ import { initDirective } from "@/directive";
 import "./index.css";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
-  faChevronLeft, 
+  faGripHorizontal,
+  faList,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faChevronLeft);
+library.add(faGripHorizontal);
+library.add(faList);
+library.add(faTimes);
 
 const pinia = createPinia();
 const app = createApp(App);
