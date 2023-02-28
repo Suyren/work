@@ -6,10 +6,35 @@ div(class="flex justify-end items-center mb-4")
     button(:class="['w-10 h-10 p-2 rounded-md hover:bg-sky-300', modeClass('list')]" @click="() => { changeMode('list') }")
       font-awesome-icon(icon="list")
 ul(class="mb-8 h-[calc(100%_-_8rem)] overflow-auto")
-  li(v-for="peopleInfo in peopleInfoList" :key="peopleInfo.id" class="inline-block mx-4 mb-4 self-start h-52")
-    Card(:peopleInfo="peopleInfo")
+  li(v-for="peopleInfo in peopleInfoList" :key="peopleInfo.id" :class="['mx-4 mb-4', {'inline-block': showMode === 'card'}]")
+    Card(v-if="showMode === 'card'" :peopleInfo="peopleInfo" :selectPeople="selectPeople")
+    CardList(v-else :peopleInfo="peopleInfo" :selectPeople="selectPeople")
 Pagination(:totalPage="totalPage" :currentPage="currentPage" :changePageFn="changePageFn" :numberOfRowsPerPage="numberOfRowsPerPage" :changeNumberOfRowsPerPage="changeNumberOfRowsPerPage")
-Modal(v-if="isShowModal" :closeFn="closeFn")
+Modal(v-if="isShowModal" :width="40" :height="50" :closeFn="closeFn")
+  div(class="mb-16")
+    img(class="w-24 h-24 rounded-full mx-auto my-0" :src="currentSelectPeople.largeHeadShot")
+  div
+    div(class="flex justify-between mb-4")
+      span(class="font-medium") 名字
+      span {{ `${currentSelectPeople.firstName} ${currentSelectPeople.lastName}` }}
+    div(class="flex justify-between mb-4")
+      span(class="font-medium") 年齡
+      span {{ currentSelectPeople.age }}
+    div(class="flex justify-between mb-4")
+      span(class="font-medium") 性別
+      span {{ currentSelectPeople.gender }}
+    div(class="flex justify-between mb-4")
+      span(class="font-medium") 電話
+      span {{ currentSelectPeople.phone }}
+    div(class="flex justify-between mb-4")
+      span(class="font-medium") 國籍
+      span {{ currentSelectPeople.country }}
+    div(class="flex justify-between mb-4")
+      span(class="font-medium") 居住地
+      span {{ currentSelectPeople.city }}
+    div(class="flex justify-between mb-4")
+      span(class="font-medium") E-Mail
+      span {{ currentSelectPeople.email }}
 </template>
   
 <script setup lang="ts">
@@ -18,6 +43,7 @@ import { computed, ref } from "vue";
 import type { Ref } from 'vue';
 import type { PeopleInfo } from "@/model/components/Card";
 import Card from '@/components/Card.vue';
+import CardList from '@/components/CardList.vue';
 import Pagination from '@/components/Pagination.vue';
 import Modal from '@/components/Modal.vue';
 
@@ -27,14 +53,21 @@ const showMode = ref(localStorage.getItem('showMode') ? localStorage.getItem('sh
 const isShowModal = ref(false);
 const numberOfRowsPerPage = ref(localStorage.getItem('perPage') ? Number(localStorage.getItem('perPage')) : 30);
 const currentPage = ref(localStorage.getItem('currentPage') ? Number(localStorage.getItem('currentPage')) : 1);
+const currentSelectPeople = ref(null) as unknown as Ref<PeopleInfo>;
 const totalPage = computed(() => {
   return Math.ceil(totalData / numberOfRowsPerPage.value);
 })
 const calcAPICount = computed(() => {
-  return totalPage.value === currentPage.value
+  const isCompletePage = totalData % numberOfRowsPerPage.value === 0;
+  return totalPage.value === currentPage.value && !isCompletePage
     ? totalData % numberOfRowsPerPage.value
     : numberOfRowsPerPage.value;
 })
+
+function selectPeople(people: PeopleInfo) {
+  currentSelectPeople.value = people;
+  toggleModal(true);
+}
 
 function changeMode(mode: string) {
   showMode.value = mode;
@@ -73,13 +106,15 @@ function getUserInfo() {
       return {
         id: people.login.uuid,
         headshot: people.picture.medium,
+        largeHeadShot: people.picture.large,
         firstName: people.name.first,
         lastName: people.name.last,
         gender: people.gender,
         email: people.email,
         phone: people.phone,
         country: people.location.country,
-        city: people.location.city
+        city: people.location.city,
+        age: people.dob.age
       }
     })
   });

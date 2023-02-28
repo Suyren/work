@@ -22,7 +22,7 @@ div(class="flex justify-center items-center w-full")
 
 <script lang="ts" setup>
 import { toRefs, computed, ref, watch } from 'vue';
-import { KeyValue } from '@/model/common';
+import type { KeyValue } from '@/model/common';
 
 interface Props {
   // 總頁數

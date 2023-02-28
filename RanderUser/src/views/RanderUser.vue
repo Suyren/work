@@ -1,8 +1,8 @@
 <template lang="pug">
 div(class="p-6")
   div(class="flex")
-    div(:class="['rounded-tl-lg px-4 py-1 cursor-pointer hover:bg-white', bookMarkClass('AllUser')]" @click="() => { changeRoute('AllUser') }") ALL 
-    div(:class="['rounded-tr-lg px-4 py-1 cursor-pointer hover:bg-white', bookMarkClass('MyFavorite')]" @click="() => { changeRoute('MyFavorite') }") Favorite
+    div(:class="['rounded-tl-lg px-4 py-1 cursor-pointer hover:bg-white', bookMarkClass('AllUser')]" @click="() => { changeRoute('AllUser') }") 所有用戶 
+    div(:class="['rounded-tr-lg px-4 py-1 cursor-pointer hover:bg-white', bookMarkClass('MyFavorite')]" @click="() => { changeRoute('MyFavorite') }") 我的最愛
   div(class="bg-white shadow-lg rounded-md p-4 h-90-vh")
     router-view
 </template>
