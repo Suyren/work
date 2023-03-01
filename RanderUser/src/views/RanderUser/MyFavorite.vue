@@ -9,7 +9,7 @@ ul(v-if="peopleInfoList.length" class="mb-8 h-[calc(100%_-_8rem)] overflow-auto"
   li(v-for="peopleInfo in peopleInfoList[currentPage - 1]" :key="peopleInfo.id" :class="['mx-4 mb-4', {'inline-block': showMode === 'card'}]")
     Card(v-if="showMode === 'card'" :peopleInfo="peopleInfo" :selectPeople="selectPeople")
     CardList(v-else :peopleInfo="peopleInfo" :selectPeople="selectPeople")
-div(v-else class="text-center text-sky-300 text-xl font-semibold") 您尚未加入任何人到我的最愛
+div(v-else class="text-center text-sky-300 text-xl font-semibold") 您尚未加入任何人到我的收藏
 Pagination(v-if="peopleInfoList.length" :totalPage="totalPage" :currentPage="currentPage" :changePageFn="changePageFn" :numberOfRowsPerPage="numberOfRowsPerPage" :changeNumberOfRowsPerPage="changeNumberOfRowsPerPage")
 Modal(v-if="isShowModal" :width="40" :height="50" :closeFn="closeFn")
   div(class="mb-16")
@@ -50,6 +50,7 @@ import { useUserStore } from "@/store";
 
 const userStore = useUserStore();
 
+// 變數功能和AllUser組件大致相同，差在使用者資料全部存在localstorage
 const showMode = ref(localStorage.getItem('showMode') ? localStorage.getItem('showMode') : 'card');
 const isShowModal = ref(false);
 const numberOfRowsPerPage = ref(localStorage.getItem('perPage') ? Number(localStorage.getItem('perPage')) : 30);
@@ -66,6 +67,7 @@ const totalPage = computed(() => {
   return total;
 })
 
+// 計算目前頁面要顯示的使用者列表
 const peopleInfoList = computed(() => {
   const allData: PeopleInfo[][] = [];
   let data: PeopleInfo[] = [];

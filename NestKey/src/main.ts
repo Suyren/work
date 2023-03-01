@@ -5,11 +5,13 @@ import { createPinia } from "pinia";
 import "./index.css";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { 
-  faChevronLeft, 
+  faPlus,
+  faMinus 
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faChevronLeft);
+library.add(faPlus);
+library.add(faMinus);
 
 const pinia = createPinia();
 const app = createApp(App);

@@ -1,7 +1,12 @@
 <template lang="pug">
 ul(class="text-left ml-4")
   li(v-for="item in props.nestList")
-    span(v-if="item.children" class="cursor-pointer" @click="() => { toggle(item) }") {{ `${item.name} ${item.isOpen ? '[-]' : '[+]'} ` }}
+    span(v-if="item.children" class="cursor-pointer flex items-center" @click="() => { toggle(item) }")
+      span(class="pr-1") {{ `${item.name}` }} 
+      | 【
+      font-awesome-icon(v-if="item.isOpen" icon="minus")
+      font-awesome-icon(v-else icon="plus")
+      | 】
     span(v-else) {{ `${item.name}: ` }}
     span(v-if="!item.children" :ref="(el) => setRef(el, item.refName)" class="text-rose-400") {{ item.value }}
     NestList(v-if="item.children" v-show="item.isOpen" :nestList="item.children" :setRef="props.setRef")

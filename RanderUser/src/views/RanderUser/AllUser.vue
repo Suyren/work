@@ -47,16 +47,25 @@ import CardList from '@/components/CardList.vue';
 import Pagination from '@/components/Pagination.vue';
 import Modal from '@/components/Modal.vue';
 
+// 記錄所有資料總數
 const totalData = 3010;
+// 使用者的資料列表
 const peopleInfoList: Ref<PeopleInfo[]> = ref([]);
+// 紀錄當前顯示卡片or列表
 const showMode = ref(localStorage.getItem('showMode') ? localStorage.getItem('showMode') : 'card');
+// 是否顯示modal
 const isShowModal = ref(false);
+// 記錄一頁幾筆
 const numberOfRowsPerPage = ref(localStorage.getItem('perPage') ? Number(localStorage.getItem('perPage')) : 30);
+// 紀錄當前頁面
 const currentPage = ref(localStorage.getItem('currentPage') ? Number(localStorage.getItem('currentPage')) : 1);
+// 紀錄當前選擇的使用者
 const currentSelectPeople = ref(null) as unknown as Ref<PeopleInfo>;
+// 計算總頁碼
 const totalPage = computed(() => {
   return Math.ceil(totalData / numberOfRowsPerPage.value);
 })
+// 根據所有資料總數和一頁幾筆來計算api要給的數量
 const calcAPICount = computed(() => {
   const isCompletePage = totalData % numberOfRowsPerPage.value === 0;
   return totalPage.value === currentPage.value && !isCompletePage
@@ -64,31 +73,37 @@ const calcAPICount = computed(() => {
     : numberOfRowsPerPage.value;
 })
 
+// 選擇使用者並打開modal
 function selectPeople(people: PeopleInfo) {
   currentSelectPeople.value = people;
   toggleModal(true);
 }
 
+// 切換顯示卡片or列表
 function changeMode(mode: string) {
   showMode.value = mode;
   localStorage.setItem('showMode', mode);
 }
 
+// modal開關函式
 function toggleModal(status: boolean) {
   isShowModal.value = status;
 }
 
+// 給modal組件的關閉callback
 function closeFn() {
   toggleModal(false);
 }
 
+// 切換頁碼
 function changePageFn(page: number) {
   currentPage.value = page;
-  localStorage.setItem('currentPage', String(page));
+  localStorage.setItem('currentPage', `${page}`);
   peopleInfoList.value = [];
   getUserInfo();
 }
 
+// 切換一頁幾筆
 function changeNumberOfRowsPerPage(perPage: number) {
   numberOfRowsPerPage.value = perPage;
   localStorage.setItem('perPage', String(perPage));
@@ -99,6 +114,7 @@ function modeClass(mode: string) {
   return showMode.value === mode ? 'bg-sky-300' : 'bg-gray-200';
 }
 
+// 取得使用者
 function getUserInfo() {
   axios.get(`https://randomuser.me/api/?page=${currentPage.value}&results=${calcAPICount.value}&seed=abc`).then((result: any) => {
     const data = result.data;
