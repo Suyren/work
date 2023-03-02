@@ -36,10 +36,10 @@ npm run build
 
 1. 沒有使用過pug和tailwind做開發，因此在語法上常常需要到官網去看怎麼使用
 2. IDE執行打包後，會報一些import檔案時顯示找不到的錯誤
-解決方式：
-    1. 先確認語法以及import路徑是否正確
-    2. 檢查npm run build時執行的語法
-    3. 最後發現是vue-tsc版本過舊造成的問題
+  解決方式：
+  1. 先確認語法以及import路徑是否正確
+  2. 檢查npm run build時執行的語法
+  3. 最後發現是vue-tsc版本過舊造成的問題
 3. 更新vue-tsc後延伸會報node_modules內的型別錯誤
 解決方式：npm run build對應執行的語法補上 --skipLibCheck 此方法不會去檢查node_modules內的型別檢測
 4. IDE使用pug模板，模板上有使用到的函式，在定義函式的地方卻顯示未使用；import組件時，IDE顯示錯誤的highlight syntax
