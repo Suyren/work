@@ -9,11 +9,11 @@ div(class="text-center selection:bg-green-100 flex justify-between p-6")
       li(v-for="(item, index) in nestData" class="flex items-center mb-2")
         div(class="w-5/12 mr-2")
           input(class="block w-full rounded-md border border-gray-300 px-2 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
-            v-model="item.str"
+            v-model="item.str" placeholder="Key"
             @input="renderNestKey")
         div(class="w-5/12 mr-2")
           input(class="block w-full rounded-md border border-gray-300 px-2 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
-            v-model="item.value"
+            v-model="item.value" placeholder="Value"
             @input="() => { updateNestValue(item) }")
         button(class="p-2 border-neutral-400 px-4 bg-blue-300 rounded w-1/12" @click="() => { removeNestData(index) }")
           font-awesome-icon(icon="minus")

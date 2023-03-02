@@ -1,10 +1,11 @@
 <template lang="pug">
 div(class="bg-black/40 fixed top-0 left-0 right-0 bottom-0 z-10")
-  div(class="my-0 mx-auto rounded-md bg-white relative p-8 overflow-auto" 
+  div(class="my-0 mx-auto rounded-md bg-white relative" 
     :style="modalContentStyle" 
     v-click-outside="normalClickOutSide")
-    slot
-    span(class="absolute top-2.5 right-2.5 flex justify-center items-center cursor-pointer" @click="props.closeFn")
+    div(class="p-8 overflow-auto h-full")
+      slot
+    span(class="absolute top-5 right-5 flex justify-center items-center cursor-pointer" @click="props.closeFn")
       font-awesome-icon(class="cursor-pointer text-xl" icon="times")
 </template>
 

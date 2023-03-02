@@ -13,7 +13,8 @@ import {
   faChevronRight,
   faAngleDoubleLeft,
   faAngleDoubleRight,
-  faHeart
+  faHeart,
+  faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -25,6 +26,7 @@ library.add(faChevronRight);
 library.add(faAngleDoubleLeft);
 library.add(faAngleDoubleRight);
 library.add(faHeart);
+library.add(faCircleNotch);
 
 
 const pinia = createPinia();

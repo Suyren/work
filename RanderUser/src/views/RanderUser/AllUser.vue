@@ -5,10 +5,12 @@ div(class="flex justify-end items-center mb-4")
       font-awesome-icon(icon="grip-horizontal")
     button(:class="['w-10 h-10 p-2 rounded-md hover:bg-sky-300', modeClass('list')]" @click="() => { changeMode('list') }")
       font-awesome-icon(icon="list")
-ul(class="mb-8 h-[calc(100%_-_8rem)] overflow-auto")
+ul( class="mb-8 h-[calc(100%_-_8rem)] overflow-auto relative")
   li(v-for="peopleInfo in peopleInfoList" :key="peopleInfo.id" :class="['mx-4 mb-4', {'inline-block': showMode === 'card'}]")
     Card(v-if="showMode === 'card'" :peopleInfo="peopleInfo" :selectPeople="selectPeople")
     CardList(v-else :peopleInfo="peopleInfo" :selectPeople="selectPeople")
+  font-awesome-icon(v-if="isCallAPI" icon="circle-notch" class="animate-spin text-2xl absolute left-2/4 top-4")
+  
 Pagination(:totalPage="totalPage" :currentPage="currentPage" :changePageFn="changePageFn" :numberOfRowsPerPage="numberOfRowsPerPage" :changeNumberOfRowsPerPage="changeNumberOfRowsPerPage")
 Modal(v-if="isShowModal" :width="40" :height="50" :closeFn="closeFn")
   div(class="mb-16")
@@ -72,7 +74,8 @@ const calcAPICount = computed(() => {
     ? totalData % numberOfRowsPerPage.value
     : numberOfRowsPerPage.value;
 })
-
+// 是否呼叫API
+const isCallAPI = ref(false);
 // 選擇使用者並打開modal
 function selectPeople(people: PeopleInfo) {
   currentSelectPeople.value = people;
@@ -116,6 +119,7 @@ function modeClass(mode: string) {
 
 // 取得使用者
 function getUserInfo() {
+  isCallAPI.value = true;
   axios.get(`https://randomuser.me/api/?page=${currentPage.value}&results=${calcAPICount.value}&seed=abc`).then((result: any) => {
     const data = result.data;
     peopleInfoList.value = data.results.map((people: any) => {
@@ -133,7 +137,11 @@ function getUserInfo() {
         age: people.dob.age
       }
     })
-  });
+    isCallAPI.value = false
+  }).catch(err => {
+    // error catch
+    isCallAPI.value = false
+  })
 }
 
 getUserInfo();
