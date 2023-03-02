@@ -40,7 +40,7 @@ npm run build
     - 先確認語法以及import路徑是否正確
     - 檢查npm run build時執行的語法
     - 最後發現是vue-tsc版本過舊造成的問題
-3. 更新vue-tsc後延伸會報node_modules內的型別錯誤
+3. 更新vue-tsc後延伸會報node_modules內的型別錯誤  
   解決方式：npm run build對應執行的語法補上 --skipLibCheck 此方法不會去檢查node_modules內的型別檢測
-4. IDE使用pug模板，模板上有使用到的函式，在定義函式的地方卻顯示未使用；import組件時，IDE顯示錯誤的highlight syntax
+4. IDE使用pug模板，模板上有使用到的函式，在定義函式的地方卻顯示未使用；import組件時，IDE顯示錯誤的highlight syntax  
   解決方式：找到IDE插件volar的官方更新紀錄上寫要使用pug，要先安裝@volar/vue-language-plugin-pug套件
