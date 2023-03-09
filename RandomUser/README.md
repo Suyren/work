@@ -1,6 +1,6 @@
 # Random User
 
-live demo: https://random-user.vercel.app/#/RandomUser/AllUser
+live demo: https://random-user-eta-lake.vercel.app/#/RandomUser/AllUser
 
 ### 首頁
 1. 以總數 3010 筆，並且可以自由選擇以每頁 10/30/50 筆資
