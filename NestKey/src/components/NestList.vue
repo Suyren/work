@@ -17,13 +17,13 @@ import type { NestListModel } from '@/model/views/NestKey';
 
 const props = defineProps<{
   nestList: NestListModel[]
-  setRef: (el: any, refName: string) => void
+  setRef: (el: Element, refName: string) => void
 }>()
 
-function setRef(el: any, refName: any) {
-  props.setRef(el, refName as string);
+function setRef(el: Element, refName: string) {
+  props.setRef(el as Element, refName);
 }
-function toggle(item:NestListModel) {
+function toggle(item: NestListModel) {
   item.isOpen = !item.isOpen
 }
 </script>

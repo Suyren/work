@@ -9,7 +9,7 @@ div(class="text-center selection:bg-green-100 flex justify-between p-6")
       li(v-for="(item, index) in nestData" class="flex items-center mb-2")
         div(class="w-5/12 mr-2")
           input(class="block w-full rounded-md border border-gray-300 px-2 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
-            v-model="item.str" placeholder="Key"
+            v-model="item.nestText" placeholder="Key"
             @input="renderNestKey")
         div(class="w-5/12 mr-2")
           input(class="block w-full rounded-md border border-gray-300 px-2 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" 
@@ -30,11 +30,11 @@ import type { NestListModel, NestData } from '@/model/views/NestKey';
 
 // 左邊區塊data model
 const nestData: Ref<NestData[]> = ref([
-  { str: 'com.a.b', value: '123' },
-  { str: 'com.c.d', value: '333' },
+  { nestText: 'com.a.b', value: '123' },
+  { nestText: 'com.c.d', value: '333' },
 ])
 
-// 巢狀object結構 ex. com.c.d   
+// 巢狀object結構 ex. com.c.d  因為結構無法預測所以型別使用any
 // {
 //   com: {
 //     c: {
@@ -42,15 +42,15 @@ const nestData: Ref<NestData[]> = ref([
 //     }
 //   }
 // }
-const set: Ref<any> = ref({});
+const nestObjectSet: Ref<any> = ref({});
 // 巢狀組件使用的data model
-const nestList: Ref<any> = ref([]);
-// 紀錄巢狀最後一層的html dom
-const vue_refs: Ref<any> = ref({});
+const nestList: Ref<NestListModel[]> = ref([]);
+// 紀錄巢狀最後一層的html dom 因為結構無法預測所以型別使用any
+const vueRefs: Ref<any> = ref({});
 
 // 新增左邊區塊data model
 function addNestData() {
-  nestData.value.push({ str: '', value: '' });
+  nestData.value.push({ nestText: '', value: '' });
 }
 
 // 刪除左邊區塊data model
@@ -60,8 +60,8 @@ function removeNestData(index: number) {
 }
 
 // 將左邊區塊data model轉成巢狀object結構
-function handleData(nest: any) {
-  const strSplit = nest.str.split('.');
+function handleData(nestData: NestData) {
+  const strSplit = nestData.nestText.split('.');
   let finalIndex = strSplit.length - 1;
   if (!strSplit[finalIndex]) {
     strSplit.splice(finalIndex, 1);
@@ -75,31 +75,31 @@ function handleData(nest: any) {
       prev[item] = {};
     }
     if (!prev[item] && i === finalIndex) {
-      prev[item] = nest.value;
+      prev[item] = nestData.value;
     }
     return prev[item];
-  }, set.value)
+  }, nestObjectSet.value)
 }
 
 // 儲存巢狀最後一層的html dom
-function setRef(el: HTMLElement, refName: string) {
-  vue_refs.value[refName] = el;
+function setRef(el: Element, refName: string) {
+  vueRefs.value[refName] = el;
 }
 
 // 將巢狀object結構轉成巢狀組件使用的data model
-function transToNested(obj: any, refName: string) {
+function transToNested(nestObject: any, refName: string) {
   let list: NestListModel[] = [];
-  for (let keyName in obj) {
+  for (let keyName in nestObject) {
     let temp: NestListModel = {
       name: keyName,
       isOpen: true
     }
-    if (typeof obj[keyName] === 'object') {
+    if (typeof nestObject[keyName] === 'object') {
       const name = refName ? `${refName}.` : refName;
-      temp.children = transToNested(obj[keyName], `${name}${keyName}`)
+      temp.children = transToNested(nestObject[keyName], `${name}${keyName}`)
     }
-    if (typeof obj[keyName] === 'string') {
-      temp.value = obj[keyName]
+    if (typeof nestObject[keyName] === 'string') {
+      temp.value = nestObject[keyName]
       temp.refName = refName ? `${refName}.${keyName}` : keyName;
     }
     list.push(temp);
@@ -109,18 +109,18 @@ function transToNested(obj: any, refName: string) {
 
 // 渲染右邊預覽區塊
 function renderNestKey() {
-  vue_refs.value = {};
-  set.value = {};
+  vueRefs.value = {};
+  nestObjectSet.value = {};
   nestData.value.forEach(item => {
     handleData(item);
   })
-  nestList.value = transToNested(set.value, '');
+  nestList.value = transToNested(nestObjectSet.value, '');
 }
 
 // 更新最後一層的html dom文字
-function updateNestValue(item: any) {
-  if (vue_refs.value[item.str]) {
-    vue_refs.value[item.str].textContent = item.value;
+function updateNestValue(item: NestData) {
+  if (vueRefs.value[item.nestText]) {
+    vueRefs.value[item.nestText].textContent = item.value;
   }
 }
 

@@ -109,10 +109,13 @@ const lastPage = () => {
 }
 // 跳轉頁面執行的function
 function pageInput(e: KeyboardEvent) {
+  if (e.key === '.') {
+    e.preventDefault();
+  }
   if (e.key !== 'Enter') {
     return;
   }
-  const page = Number(inputPage.value);
+  const page = Math.floor(Number(inputPage.value));
   if (Number.isNaN(page)) {
     alert('請輸入正確的頁碼');
     (e.target as HTMLInputElement).blur();

@@ -6,6 +6,6 @@ export interface NestListModel {
   isOpen: boolean
 }
 export interface NestData {
-  str: string
+  nestText: string
   value: string
 }
